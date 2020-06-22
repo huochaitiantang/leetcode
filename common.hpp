@@ -4,6 +4,7 @@
 #include<math.h>
 #include<stdio.h>
 #include<queue>
+#include<string.h>
 using namespace std;
 
 
@@ -62,10 +63,6 @@ vector<int> iter_tree_by_level(TreeNode* root){
     return res;
 }
 
-void print_white_space(int num){
-    for(int i = 0; i < num; i++) std::cout << " ";
-}
-
 void draw_subtree(TreeNode* root, vector<string>& ss, int level, int start_id, int end_id, int tag){
     if(root == NULL) return;
     int mid = (start_id + end_id) / 2;
@@ -75,7 +72,9 @@ void draw_subtree(TreeNode* root, vector<string>& ss, int level, int start_id, i
         else ss[branch_level][mid] = '\\';
     }
     int val_level = level * 2;
-    ss[val_level][mid] = '0' + root->val;
+    char cs[100];
+    sprintf(cs, "%d", root->val);
+    for(int i = 0; i < strlen(cs); i++) ss[val_level][mid + i] = cs[i];
     draw_subtree(root->left, ss, level + 1, start_id, mid, 1);
     draw_subtree(root->right, ss, level + 1, mid, end_id, 2);
     return;
@@ -86,7 +85,7 @@ void print_tree(TreeNode* root, int size){
     // max_level = 0, 1, 2, ...
     // max width = 1, 3, 7, ...
     int max_level = (int)(log((float)size + 0.5) / log(2.0));
-    int max_width = (int)pow(2, max_level + 1) - 1;
+    int max_width = (int)pow(2, max_level + 2) - 1;
     vector<string> ss(max_level * 2 + 1, string(max_width + 1, ' '));
     draw_subtree(root, ss, 0, 0, max_width, 0);
     for(int i = 0; i < ss.size(); i++)
