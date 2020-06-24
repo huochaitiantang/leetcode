@@ -7,6 +7,11 @@
 #include<string.h>
 using namespace std;
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
 
 struct TreeNode {
     int val;
@@ -91,4 +96,24 @@ void print_tree(TreeNode* root, int size){
     for(int i = 0; i < ss.size(); i++)
         std::cout << ss[i] << std::endl;
     return;
+}
+
+ListNode* construct_list(vector<int> input){
+    ListNode * head = new ListNode(input[0]);
+    ListNode * p = head;
+    for(int i = 1; i < input.size(); i++){
+       ListNode * cur = new ListNode(input[i]);
+       p->next = cur;
+       p = cur;
+    }
+    return head;
+}
+
+void print_list(ListNode * head){
+    ListNode * p = head;
+    while(p != NULL){
+        cout << p->val << " ";
+        p = p->next;
+    }
+    cout << endl;
 }
