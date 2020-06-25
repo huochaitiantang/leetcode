@@ -68,6 +68,11 @@ vector<int> iter_tree_by_level(TreeNode* root){
     return res;
 }
 
+int max_depth(TreeNode* root){
+    if(root == NULL) return 0;
+    return max(max_depth(root->left), max_depth(root->right)) + 1;
+}
+
 void draw_subtree(TreeNode* root, vector<string>& ss, int level, int start_id, int end_id, int tag){
     if(root == NULL) return;
     int mid = (start_id + end_id) / 2;
@@ -89,7 +94,8 @@ void print_tree(TreeNode* root, int size){
     if(root == NULL) return;
     // max_level = 0, 1, 2, ...
     // max width = 1, 3, 7, ...
-    int max_level = (int)(log((float)size + 0.5) / log(2.0));
+    int max_level = max_depth(root) - 1;
+    if(max_level < 0) return;
     int max_width = (int)pow(2, max_level + 2) - 1;
     vector<string> ss(max_level * 2 + 1, string(max_width + 1, ' '));
     draw_subtree(root, ss, 0, 0, max_width, 0);
