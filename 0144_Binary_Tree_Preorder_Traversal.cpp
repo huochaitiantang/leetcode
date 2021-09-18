@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include<stack>
 
 class Solution {
 public:
@@ -10,11 +11,30 @@ public:
         }
     }
 
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> preorderTraversal_0(TreeNode* root) {
         vector<int> ans;
         visit(root, ans);
         return ans;
     }
+
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root == NULL) return ans;
+        stack<TreeNode*> s;
+        TreeNode* n = root;
+        while(!s.empty() || n != NULL){
+            while(n != NULL){
+                ans.push_back(n->val);
+                s.push(n);
+                n = n->left;
+            }
+            n = s.top();
+            s.pop();
+            n = n->right;
+        }
+        return ans;
+    }
+
 };
 
 int main(){
